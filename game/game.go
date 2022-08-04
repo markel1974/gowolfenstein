@@ -98,6 +98,7 @@ func (g *Game) Run() {
 	var currentTimer float64
 	var lastTimer float64
 	var speed float64
+	mouseEnabled := true
 
 	//win.SetTitle("wolf (fps: " + strconv.Itoa(counter) + ")")
 
@@ -106,12 +107,14 @@ func (g *Game) Run() {
 		last = time.Now()
 		doubleSpeed := false
 
-		mousePos := win.MousePosition()
-		mousePrevPos := win.MousePreviousPosition()
-		if mousePos.X != mousePrevPos.X || mousePos.Y != mousePrevPos.Y {
-			mouseX := mousePos.X - mousePrevPos.X
-			mouseY := mousePos.Y - mousePrevPos.Y
-			g.world.player.mouseMove(mouseX, mouseY)
+		if mouseEnabled && win.MouseInsideWindow() {
+			mousePos := win.MousePosition()
+			mousePrevPos := win.MousePreviousPosition()
+			if mousePos.X != mousePrevPos.X || mousePos.Y != mousePrevPos.Y {
+				mouseX := mousePos.X - mousePrevPos.X
+				mouseY := mousePos.Y - mousePrevPos.Y
+				g.world.player.mouseMove(mouseX, mouseY)
+			}
 		}
 
 		for v := range win.KeysPressed() {
@@ -179,6 +182,10 @@ func (g *Game) Run() {
 
 		if win.JustPressed(pixels.KeyTab) {
 			g.world.player.Open()
+		}
+
+		if win.JustPressed(pixels.KeyM) {
+			mouseEnabled = false
 		}
 
 		//if win.JustPressed(pixelgl.KeyS) {
