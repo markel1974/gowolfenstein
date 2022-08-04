@@ -17,10 +17,8 @@ type Game struct {
 	world       *World
 	textures    *Textures
 	walls       *Walls
-	//sprites     *Sprites
 
-	miniMap *MiniMap
-
+	miniMap    *MiniMap
 	mainMatrix pixels.Matrix
 	mainSprite *pixels.Sprite
 	mapMatrix  pixels.Matrix
@@ -45,7 +43,6 @@ func (g *Game) Setup(c pixels.Vec) {
 	g.world = NewWorld(g.screenWidth, g.screenHeight, g.textures, g.mainSurface)
 
 	g.walls = NewWalls(g.world, g.textures, g.world.lights, g.mainSurface, g.screenWidth, g.screenHeight)
-	//g.sprites = NewSprites(g.world, g.textures, g.world.lights, g.mainSurface, g.screenWidth, g.screenHeight)
 
 	g.miniMap = NewMiniMap(g.world)
 
@@ -139,7 +136,6 @@ func (g *Game) Run() {
 				g.world.player.moveRight(move * dt * speed)
 			case pixels.KeyLeftShift, pixels.KeyRightShift:
 				doubleSpeed = true
-			//case pixelgl.KeyK: g.engine.Kick(g.as.pos, g.as.dir)
 			case pixels.KeySpace:
 				g.world.player.Fire()
 			}
@@ -163,34 +159,26 @@ func (g *Game) Run() {
 			g.world.player.SetWeapon(g.weapons[2])
 			g.world.player.Fire()
 		}
-
 		if win.JustPressed(pixels.MouseButton1) {
 			g.world.player.SetWeapon(g.weapons[2])
 			g.world.player.Fire()
 		}
-
 		if win.JustPressed(pixels.KeyP) {
 			g.world.player.Kick()
 		}
-
 		if win.JustPressed(pixels.Key1) {
 			g.world.player.SetLight(8, 4)
 		}
 		if win.JustPressed(pixels.Key2) {
 			g.world.player.SetLight(0, 0)
 		}
-
 		if win.JustPressed(pixels.KeyTab) {
 			g.world.player.Open()
 		}
-
 		if win.JustPressed(pixels.KeyM) {
 			mouseEnabled = false
 		}
-
-		//if win.JustPressed(pixelgl.KeyS) {
-		//	g.Setup(c)
-		//}
+		//if win.JustPressed(pixelgl.KeyS) { g.Setup(c) }
 
 		currentTimer = pixels.GLGetTime()
 		if currentTimer-lastTimer >= 1.0/framerate {
